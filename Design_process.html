@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Design Process and Rationale</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+        h1, h2 {
+            color: #2c3e50;
+        }
+        p {
+            margin-bottom: 15px;
+        }
+        ul {
+            margin-left: 20px;
+        }
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <h1>Design Process and Rationale</h1>
+
+    <h2>Design Process</h2>
+    <p>
+        The design process for this visualization began with identifying the key aspects of the dataset that would provide meaningful insights to users. 
+        The dataset contained variables such as brand, model year, mileage, and price, which are critical factors for evaluating cars. 
+        I brainstormed multiple ideas to visualize these aspects effectively, including bar charts, scatter plots, and line graphs.
+    </p>
+    <p>
+        Initially, I sketched several designs, aiming to present the data in a way that was both visually appealing and easy to understand. 
+        For instance, I considered using a scatter plot to show the relationship between mileage and price but ultimately decided on a bar chart as it provides 
+        a clearer comparison of car prices across different brands.
+    </p>
+    <p>
+        During the development phase, I implemented a dynamic filtering system. This allowed users to filter data by model year and mileage, ensuring interactivity 
+        and personalization. The iterative design process involved testing various color schemes, scales, and layouts to enhance readability and accessibility.
+    </p>
+
+    <h2>Rationale of Design Choices</h2>
+    <ul>
+        <li><strong>Bar Chart Selection:</strong> I chose a bar chart because it provides a straightforward way to compare prices across car brands. The height of the bars intuitively conveys the differences in price.</li>
+        <li><strong>Color Encoding:</strong> The bars were assigned a primary steel blue color, with a hover effect changing the color to orange. This design choice ensures visual consistency while also providing interactivity.</li>
+        <li><strong>Dynamic Filters:</strong> Including filters for model year and mileage ensures the visualization is interactive and enables customized exploration.</li>
+        <li><strong>Axes and Labels:</strong> The x-axis represents car brands, while the y-axis shows price. Tick marks and grid lines were added to aid precise value estimation.</li>
+        <li><strong>Layout:</strong> Filters are placed above the chart to ensure they are immediately visible and accessible.</li>
+    </ul>
+
+    <h2>Insights and Discoveries</h2>
+    <p>
+        Using the visualization, I discovered several trends in the dataset. For example, cars with lower mileage generally had higher prices. 
+        Brands like Tesla and Lexus consistently appeared at the higher end of the price spectrum, indicating their premium positioning in the market. 
+        On the other hand, older model years were associated with significantly lower prices, likely due to depreciation.
+    </p>
+    <p>
+        One interesting finding was the sharp price differences within the same model year across different brands. For instance, a 2021 Audi was priced at $34,999, 
+        while a 2021 Hyundai was significantly lower at $18,005. This suggests varying brand value perceptions among consumers.
+    </p>
+    <p>
+        <strong>Note:</strong> Screenshots of the visualization support these findings and help reinforce the data-driven conclusions drawn from the analysis.
+    </p>
+
+    <footer>
+        <p>
+            <a href="final_N328.html">Back to Visualization</a> |
+            <a href="https://www.youtube.com/watch?v=your_video_id" target="_blank">Watch Video</a>
+        </p>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Car Brand Analysis</title>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <style>
+        .chart {
+            font: 10px sans-serif;
+        }
+        .bar {
+            fill: steelblue;
+        }
+        .bar:hover {
+            fill: orange;
+        }
+        .axis {
+            font: 10px sans-serif;
+        }
+        .axis path,
+        .axis line {
+            fill: none;
+            shape-rendering: crispEdges;
+        }
+        .x.axis path {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>Car Brand Price Analysis</h1>
+
+    <!-- Filters -->
+    <label for="modelYearFilter">Model Year:</label>
+    <select id="modelYearFilter">
+        <option value="All">All</option>
+    </select>
+
+    <label for="mileageFilter">Mileage:</label>
+    <input type="range" id="mileageFilter" min="0" max="300000" step="1000" value="300000">
+    <span id="mileageValue">300,000</span>
+
+    <!-- Chart Container -->
+    <svg id="chart" width="800" height="400"></svg>
+
+    <script>
+        // Sample dataset (replace with your actual data)
+        const data = [
+            { brand: "Ford", modelYear: 2013, mileage: 51000, price: 10300 },
+            { brand: "Hyundai", modelYear: 2021, mileage: 34742, price: 38005 },
+            { brand: "Lexus", modelYear: 2022, mileage: 22372, price: 54598 },
+            { brand: "INFINITI", modelYear: 2015, mileage: 88900, price: 15500 },
+            { brand: "Audi", modelYear: 2021, mileage: 9835, price: 34999 },
+            { brand: "Acura", modelYear: 2016, mileage: 136397, price: 14798 },
+            { brand: "BMW", modelYear: 2001, mileage: 242000, price: 7300 },
+            { brand: "Tesla", modelYear: 2020, mileage: 34000, price: 69950 }
+        ];
+
+        // SVG dimensions
+        const svg = d3.select("#chart");
+        const margin = { top: 20, right: 30, bottom: 40, left: 50 };
+        const width = +svg.attr("width") - margin.left - margin.right;
+        const height = +svg.attr("height") - margin.top - margin.bottom;
+
+        const chart = svg.append("g").attr("transform", `translate(${margin.left},${margin.top})`);
+
+        const x = d3.scaleBand().range([0, width]).padding(0.1);
+        const y = d3.scaleLinear().range([height, 0]);
+
+        chart.append("g")
+            .attr("class", "x axis")
+            .attr("transform", `translate(0,${height})`);
+
+        chart.append("g")
+            .attr("class", "y axis");
+
+        // Populate Model Year Filter
+        const years = Array.from(new Set(data.map(d => d.modelYear))).sort((a, b) => a - b);
+        years.forEach(year => {
+            d3.select("#modelYearFilter").append("option").attr("value", year).text(year);
+        });
+
+        // Update chart based on filters
+        function updateChart() {
+            const selectedYear = d3.select("#modelYearFilter").property("value");
+            const maxMileage = +d3.select("#mileageFilter").property("value");
+
+            // Filter data
+            let filteredData = data.filter(d => d.mileage <= maxMileage);
+            if (selectedYear !== "All") {
+                filteredData = filteredData.filter(d => d.modelYear == selectedYear);
+            }
+
+            // Update scales
+            x.domain(filteredData.map(d => d.brand));
+            y.domain([0, d3.max(filteredData, d => d.price)]);
+
+            // Bind data to bars
+            const bars = chart.selectAll(".bar").data(filteredData, d => d.brand);
+
+            // Remove old bars
+            bars.exit().remove();
+
+            // Update existing bars
+            bars.attr("x", d => x(d.brand))
+                .attr("y", d => y(d.price))
+                .attr("height", d => height - y(d.price))
+                .attr("width", x.bandwidth());
+
+            // Add new bars
+            bars.enter().append("rect")
+                .attr("class", "bar")
+                .attr("x", d => x(d.brand))
+                .attr("y", d => y(d.price))
+                .attr("height", d => height - y(d.price))
+                .attr("width", x.bandwidth());
+
+            // Update axes
+            chart.select(".x.axis")
+                .call(d3.axisBottom(x));
+
+            chart.select(".y.axis")
+                .call(d3.axisLeft(y).ticks(10));
+        }
+
+        // Add event listeners
+        d3.select("#modelYearFilter").on("change", updateChart);
+        d3.select("#mileageFilter").on("input", function () {
+            d3.select("#mileageValue").text(this.value);
+            updateChart();
+        });
+
+        // Initial chart render
+        updateChart();
+    </script>
+	<footer>
+    <p>
+        <a href="Design_process.html">Documentation Page</a> |
+        <a href="https://www.youtube.com/watch?v=your_video_id" target="_blank">Watch Video</a>
+    </p>
+</footer>
+
+</body>
+</html>
